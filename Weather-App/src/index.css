@@ -1,0 +1,146 @@
+@import url("https://fonts.googleapis.com/css2?family=Aleo&family=Noto+Sans&family=Outfit&display=swap");
+
+/*=== Color Styles ===*/
+:root {
+  font-family: "sans-serif";
+
+  --blueGray-1: #111827;
+  --blueGray-2: #1f2937;
+  --blueGray-3: #242b3a;
+  --gray-1: #c9cbcf;
+  --gray-2: #393f4d;
+  --accentBlue-1: #1048bf;
+  --accentBlue-2: #0094ff;
+}
+html {
+  scroll-behavior: smooth;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  /* color: white; */
+}
+#root {
+  width: 100%;
+}
+html {
+  background-color: var(--blueGray-1);
+  width: 100%;
+}
+
+/*=== Font Styles ===*/
+
+/** Noto Sans*/
+.noto-h1-48 {
+  font-family: "Noto Sans";
+  font-size: 3rem;
+}
+.noto-h2-31 {
+  font-family: "Noto Sans";
+  font-size: 1.95rem;
+}
+.noto-h3-25 {
+  font-family: "Noto Sans";
+  font-size: 1.5625rem;
+  letter-spacing: 1px;
+}
+.noto-h4-20 {
+  font-family: "Noto Sans";
+  font-size: 1.25rem;
+}
+.noto-h5-16 {
+  font-family: "Noto Sans";
+  font-size: 1rem;
+}
+
+/** Aleo */
+.aleo-h4-20 {
+  font-family: "aleo";
+  font-size: 1.25rem;
+}
+.aleo-h5-16 {
+  font-family: "aleo";
+  font-size: 1rem;
+}
+
+/** Outfit */
+.outfit-h3-25 {
+  font-family: "outfit";
+  font-size: 1.5625rem;
+}
+.outfit-h4-20 {
+  font-family: "outfit";
+  font-size: 1.25rem;
+}
+.outfit-h5-16 {
+  font-family: "outfit";
+  font-size: 1rem;
+}
+
+main {
+  width: 90%;
+  margin: 0 auto;
+}
+
+@media screen and (min-width: 576px) {
+}
+
+@media screen and (min-width: 768px) {
+  main {
+    width: 80%;
+  }
+}
+select {
+  /* Layout */
+  padding: 8px 12px; /* Add padding for better spacing */
+  width: 200px; /* Set a fixed width or use 100% for full width */
+  margin: 8px 0; /* Add margin for spacing */
+
+  /* Typography */
+  font-family: "Noto Sans", sans-serif; /* Use a modern font */
+  font-size: 14px; /* Set font size */
+  color: #333; /* Text color */
+
+  /* Background and Border */
+  background-color: #fff; /* White background */
+  border: 1px solid #ccc; /* Light gray border */
+  border-radius: 4px; /* Rounded corners */
+
+  /* Dropdown Arrow */
+  appearance: none; /* Remove default arrow */
+  background-image: url("data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%23333%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13-5.4H18.4c-5%200-9.3%201.8-12.9%205.4A17.6%2017.6%200%200%200%200%2082.2c0%205%201.8%209.3%205.4%2012.9l128%20127.9c3.6%203.6%207.8%205.4%2012.8%205.4s9.2-1.8%2012.8-5.4L287%2095c3.5-3.5%205.4-7.8%205.4-12.8%200-5-1.9-9.2-5.5-12.8z%22%2F%3E%3C%2Fsvg%3E"); /* Custom arrow */
+  background-repeat: no-repeat;
+  background-position: right 8px center; /* Position the arrow */
+  background-size: 12px; /* Size of the arrow */
+}
+
+/* Hover state */
+select:hover {
+  border-color: #999; /* Darker border on hover */
+}
+
+/* Focus state */
+select:focus {
+  outline: none; /* Remove default outline */
+  border-color: #007bff; /* Blue border on focus */
+  box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.25); /* Add a subtle glow */
+}
+
+/* Disabled state */
+select:disabled {
+  background-color: #f5f5f5; /* Light gray background */
+  color: #999; /* Gray text */
+  cursor: not-allowed; /* Show disabled cursor */
+}
+
+input[type="number"] {
+  width: 100px;
+  height: 40px;
+  padding: 8px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  outline: none;
+}
