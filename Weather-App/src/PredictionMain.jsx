@@ -1,20 +1,36 @@
 import React, { useState, useRef, useEffect } from "react";
-import axios from "axios";
 import WeatherProbabilityChart from "./components/prediction/WeatherProbabilityChart";
+import WeatherVisualizations from "./components/prediction/WeatherVisualizations";
 import { Toaster, toast } from "sonner";
+import api from './api/axiosConfig';
 
 const PredictionMain = () => {
   const [data, setData] = useState({
-    states: [],
-    probabilities: [],
-    most_likely_state: "",
+    "message": "Predictions for 3th Day fetched",
+    "data": {
+      "states": [
+        "drizzle",
+        "rain",
+        "sun",
+        "snow",
+        "fog"
+      ],
+      "probabilities": [
+        0.03410886702735334,
+        0.39484246640231196,
+        0.48779817499960887,
+        0.014907334871374706,
+        0.06834315669935112
+      ],
+      "most_likely_state": "sun",
+      "data_source": "user_uploaded"
+    }
   });
   const [currentState, setCurrentState] = useState("sun");
   const [nDays, setNDays] = useState(3);
-
   const [file, setFile] = useState(null);
   const [usingDefaultCSV, setUsingDefaultCSV] = useState(true);
-
+  const [refreshKey, setRefreshKey] = useState(0);
   const fileInputRef = useRef();
 
   // Function to handle file upload
@@ -23,54 +39,54 @@ const PredictionMain = () => {
     setFile(uploadedFile);
     setUsingDefaultCSV(false);
 
-    // Send the file to the backend
     const formData = new FormData();
     formData.append("file", uploadedFile);
 
     try {
-      const response = await axios.post(
-        "http://localhost:8000/upload",
-        formData,
-        {
-          headers: {
-            "Content-Type": "multipart/form-data",
-          },
-        }
-      );
-      toast.info(response.data.message, { id: "upload-file" });
+      const response = await api.post("/upload", formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      });
+      toast.success(response.data.message, { id: "upload-file" });
       console.log(response.data.message);
+      setRefreshKey(prev => prev + 1); // Trigger refresh
     } catch (error) {
       console.error("Error uploading file:", error);
+      toast.error("Error uploading file. Please try again.");
     }
   };
 
   // Function to clear the uploaded file
   const clearFile = async () => {
     try {
-      const response = await axios.post("http://localhost:8000/clear");
+      const response = await api.post("/clear");
       console.log(response.data.message);
       toast.info(response.data.message, { id: "clear-file" });
       setFile(null);
       setUsingDefaultCSV(true);
+      setRefreshKey(prev => prev + 1); // Trigger refresh
       if (fileInputRef?.current) {
         fileInputRef.current.value = "";
       }
     } catch (error) {
       console.error("Error clearing file:", error);
+      toast.error("Error clearing file. Please try again.");
     }
   };
 
   // Function to fetch predictions
   const fetchPredictions = async () => {
     try {
-      const response = await axios.get(
-        `http://localhost:8000/predict?current_state=${currentState}&n_days=${nDays}`
+      const response = await api.get(
+        `/predict?current_state=${currentState}&n_days=${nDays}`
       );
       toast.info(response.data.message);
       console.log(response.data);
       setData(response.data);
     } catch (error) {
       console.error("Error fetching data:", error);
+      toast.error("Error fetching predictions. Please try again.");
     }
   };
 
@@ -126,6 +142,7 @@ const PredictionMain = () => {
           alignItems: "center",
           columnGap: "16px",
           width: "100%",
+          marginBottom: "30px"
         }}
       >
         <div
@@ -168,8 +185,6 @@ const PredictionMain = () => {
             />
           </label>
         </div>
-        {/* Predict button */}
-
         <button
           onClick={fetchPredictions}
           style={{ padding: "5px", cursor: "pointer" }}
@@ -177,6 +192,8 @@ const PredictionMain = () => {
           Predict
         </button>
       </div>
+
+      <WeatherVisualizations refreshKey={refreshKey} />
 
       <Toaster position={"top-right"} />
     </div>
